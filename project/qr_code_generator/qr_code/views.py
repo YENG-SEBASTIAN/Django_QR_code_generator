@@ -15,7 +15,12 @@ def all_qr_codes(request):
     if request.method == "GET":
         img = QrGenerator.objects.all()
         serializer = QrGeneratorSerializer(img, many=True)
-        return Response(serializer.data)
+        context ={
+            "img":img
+            }
+        # return Response(serializer.data)
+
+        
     
     
     elif request.method == "POST":
@@ -26,6 +31,9 @@ def all_qr_codes(request):
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+    return render(request, 'home.html', context)
+
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def img_detail_view(request, id):
